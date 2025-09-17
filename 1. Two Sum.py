@@ -6,3 +6,5 @@ class Solution(object):
             if wanted in seen:
                 return [seen[wanted], i]
             seen[nums[i]] = i
+
+#with hashmap 0ms runtime beats 100%
