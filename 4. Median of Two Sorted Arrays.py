@@ -14,7 +14,9 @@ class Solution(object):
             else:
                 return(even/2)
         else:
-            return(mixed[mixedlen/2])        
+            return(mixed[mixedlen/2])    
+    
 #I understand this isnt the algorithmically fastest solution but it is still relatively fast for only needing to merge sort
+#this one took two days because i tried to figure out a better way then this
 
 #0ms Beats 100.00%
