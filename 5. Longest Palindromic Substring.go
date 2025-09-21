@@ -1,43 +1,34 @@
 func longestPalindrome(s string) string {
+	//trying to learn go for this one
 	lS := len(s)
-	longstV := 0
-	longstStrt := 0
-	longstEnd := 1
-	oddfail := false
-	evenfail := false
-	for i := 0; i < lS; i++ {
-		// loops through every char in the string and expands out from each char by v comparing the two
-		oddfail = false
-		evenfail = false
-		for v := 0; i-v >= 0; v++ {
-			//this if below only finds the longest odd palindrome
-			if i+v < lS && s[i+v] == s[i-v] && !oddfail {
-				if 2*v+1 > longstV {
-					longstV = 2*v + 1
-					longstStrt = i - v
-					longstEnd = i + v + 1
-				}
-			} else {
-				oddfail = true
-			}
-			//finds longest even palindrome
-			if i+1+v < lS && s[i-v] == s[i+1+v] && !evenfail {
-				if 2*(v+1) > longstV {
-					longstV = 2 * (v + 1)
-					longstStrt = i - v
-					longstEnd = i + 1 + v + 1 // +1 because slice end is exclusive
-				}
-			} else {
-				evenfail = true
-			}
+	if lS <= 1 {
+		return s
+	}
+	oddPalindrome := s[0:1]
+	evenPalindrome := s[0:1]
+	longest := s[0:1]
+	iterateExpand := func(leftPointer int, rightPointer int) string {
+		for rightPointer < lS && leftPointer >= 0 && s[rightPointer] == s[leftPointer] {
+			rightPointer++
+			leftPointer--
+		}
+		return s[leftPointer+1 : rightPointer]
+	}
+
+	for i := 0; i < lS-1; i++ {
+		oddPalindrome = iterateExpand(i, i)
+		evenPalindrome = iterateExpand(i, i+1)
+		if len(oddPalindrome) > len(longest) {
+			longest = oddPalindrome
+		}
+		if len(evenPalindrome) > len(longest) {
+			longest = evenPalindrome
 		}
 	}
-	return s[longstStrt:longstEnd]
+	return longest
 }
 
-//This is not the fastest method
+//second time doing this problem and i only came to this solution after looking at the discussions tab and seeing people talk about using pointers
+//this is sooo much better then my code before and while it still technically runs in o(n^2) time, 0ms makes me not really care
 
-//even with the expanding out from i idea this code is abhoriently slow at o(n^2)
-// i will probably redo this one and this will get commited over
-
-//45ms beats 29.26%
+//0ms beats 100%
